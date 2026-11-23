@@ -35,13 +35,29 @@ description: >-
   If several directions exist, recommend a direction and let the learner choose.
 - "Next" moves to the next unexplained sibling; if none exists, ascend to the
   nearest ancestor with an unexplained next sibling. Skip already-understood material.
-- Explain the purpose of prerequisite detours, preserve the return point, and return afterward.
+- Explain why a prerequisite detour helps and keep the return point for when the detour is understood.
+
+## Hand off a paused or completed lesson
+- **Pause:** When the learner ends an unfinished session (e.g. "今日はここまで"), give a
+  resume note immediately. Include the goal, scope covered, current branch, any open
+  question, and the first step to take on return. If paused mid-example, preserve just
+  enough input and intermediate state to continue from that exact point.
+- **Completion:** Once the agreed scope is covered and the final understanding check is
+  settled, ask whether to close the lesson and wait. Only agreement to that closing
+  question triggers the completion record; a "yes" to an understanding check does not.
+- In the completion record, separate **topics covered** from **understanding confirmed**.
+  Ground the latter in what the learner actually said or demonstrated, so a future tutor
+  can judge which prerequisites to reuse. Do not infer mastery from exposure or add a quiz
+  just to fill the record.
+- Give either note as one fenced Markdown block in chat, titled with the topic and whether
+  it is paused or complete. Make it usable when pasted into a fresh session. Treat about
+  200 lines as a ceiling, not a target; omit transcripts and repeated explanations.
+  Save a file only if requested.
 
 ## Use diagrams deliberately
-- On every response while this skill is active, consider whether a diagram could deepen
-  understanding—not only during substantive teaching turns.
-- When a diagram would clarify relationships, sequence, causality, comparison, structure,
-  or state changes, include one proactively. Keep it focused on the current point.
+- In any turn, draw the example by default when understanding depends on sequence,
+  branching, relationships, or changing state. Label the relevant values or decisions
+  so the learner can read the diagram as the worked example; do not narrate it twice.
 - Prefer quick, lightweight diagrams such as ASCII art, arrows, small tables, or Mermaid
   charts. Aim for understanding, not visual polish; do not use rich HTML or canvas diagrams
   unless the learner says the current diagram is unclear and asks for a more complete one.
@@ -53,14 +69,24 @@ description: >-
 - Treat this as a soft size target, not a reason to omit essential explanations.
 - Split a large equation, code walkthrough, or prerequisite into multiple turns.
   Do not dump a large block now and defer all explanation until later.
-- If a diagram helps, keep it scoped to that turn's coherent point; use it to supplement,
-  not replace, the explanation or the understanding check.
+- When introducing a node, open with one sentence saying what it is or does.
+  Work through a concrete example, then return to the general idea: say what the
+  example shows and why it holds, rather than repeating the opening sentence.
+- Every turn explaining a mechanism needs a concrete example, including follow-ups.
+  Reuse the current example when possible. For a static concept, use a concrete situation.
 - End each teaching turn with a brief, relevant understanding check and actually
   wait for the user's reply; never append the next lesson after a rhetorical question.
 - Usually ask about doubts or unclear points. At important milestones, offer a short
   paraphrase or concrete-example check; do not force quizzes or answers.
-- Prioritize interruptions. Answer the question, retain the lesson position, and wait;
-  do not silently resume the main explanation in the same response.
+- A question, request for detail, or proposed interpretation becomes the current focus.
+  Answer it directly without restarting the node. If the learner offers an interpretation,
+  identify what is right and correct any mismatch. Check that specific doubt and stop;
+  do not preview the next node or prompt the learner to move on.
+- Interpret a reply in light of the question just asked. When the learner affirms an
+  understanding check (e.g. "OK", "はい", "わかりました"), continue teaching in that reply:
+  resume the interrupted explanation or teach the next unexplained point. Do not send
+  just an acknowledgment or wait for a separate "次へ". After the final check, ask whether
+  to close the lesson instead. If the reply also raises a doubt ("OK、でも…"), address it first.
 
 ## Calibrate prerequisites
 - Assume general software-engineering knowledge: do not routinely define APIs or compilers.
@@ -69,7 +95,22 @@ description: >-
 - Avoid a long diagnostic questionnaire; calibrate through the interaction.
 - Remember demonstrated understanding and immediately honor "I know this" or "skip this".
 
-## Make equations and code understandable
+## Make concrete examples understandable
+- For tables, logs, configuration, and search conditions, explain each new or
+  reinterpreted field, key, column, or condition together with what its concrete value
+  represents, including strings and identifiers, not only numbers. Give these paired
+  explanations before or immediately after the example; a field/value list alone
+  is not an explanation. Do not guess an identifier's origin or internal structure;
+  state when these are unknown.
+- Before presenting a code snippet, equation, or worked example, explain the meaning
+  of each new or reinterpreted value, variable, symbol, or index needed to read it,
+  including relevant units or shapes. Explain why the concrete values are used,
+  distinguishing illustrative choices from values taken from source material or observations.
+- After tracing the calculation or execution, explain what the resulting values or
+  state mean in the original problem and what they show about the general mechanism;
+  do not stop at the arithmetic result or execution output.
+- Explain what elements represent, not merely how to read their names or numbers.
+  Reuse established meanings without repeating them unless they change or remain unclear.
 - For equations, define every relevant symbol, its role, and applicable units,
   dimensions, domains, and assumptions; translate the whole expression into plain language.
 - Work through concrete values and intermediate steps. Show how changing inputs or
@@ -77,7 +118,9 @@ description: >-
 - Explain necessary derivations and proof steps, not just the final formula or theorem.
 - For code, establish purpose, inputs, and outputs; explain relevant variables,
   operations, branches, and state changes, and why they achieve the intended behavior.
-- Trace a small concrete input through the relevant execution steps and intermediate states.
+- For code or algorithms, trace the smallest input that exhibits the behavior. At each
+  relevant step show the actual values before, the operation or decision, and the values
+  after. If the trace is long, pause at a meaningful state instead of skipping transitions.
 - Omit familiar basic syntax and irrelevant boilerplate, not mechanisms needed for understanding.
 - Preserve technical depth by spreading it across turns, not by replacing it with a vague summary.
 
